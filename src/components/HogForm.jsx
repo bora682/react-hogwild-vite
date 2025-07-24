@@ -1,121 +1,128 @@
 import React, { useState } from "react";
 
 function HogForm({ onAddHog }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    image: "",
-    specialty: "",
-    weight: "",
-    greased: false,
-    "highestMedalAchieved": "",
-  });
+    const [formData, setFormData] = useState({
+        name: "",
+        image: "",
+        specialty: "",
+        weight: "",
+        greased: false,
+        "highest medal achieved": "",
+    });
 
-  function handleChange(e) {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: newValue,
-    }));
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    // Optional: simple validation
-    if (formData.name.trim() === "" || formData.image.trim() === "") {
-      alert("Name and image are required.");
-      return;
+    function handleChange(e) {
+        const { name, value, type, checked } = e.target;
+        const newValue = type === "checkbox" ? checked : value;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: newValue,
+        }));
     }
 
-    const newHog = {
-      ...formData,
-      weight: parseFloat(formData.weight),
-      "highest medal achieved": formData.highestMedalAchieved 
-    };
+    function handleSubmit(e) {
+        e.preventDefault();
 
-    onAddHog(newHog);
+        if (formData.name.trim() === "" || formData.image.trim() === "") {
+            return;
+        }
 
-    // Reset the form
-    setFormData({
-      name: "",
-      image: "",
-      specialty: "",
-      weight: "",
-      greased: false,
-      "highest medal achieved": "",
-    });
-  }
+        const newHog = {
+            name: formData.name,
+            image: formData.image,
+            specialty: formData.specialty,
+            weight: parseFloat(formData.weight),
+            greased: formData.greased,
+            "highest medal achieved": formData["highest medal achieved"]
+        };
 
-  return (
-    <form className="ui form" onSubmit={handleSubmit}>
-      <h3>Add a New Hog</h3>
+        onAddHog(newHog);
 
-      <div className="field">
-        <label>Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-      </div>
+        setFormData({
+            name: "",
+            image: "",
+            specialty: "",
+            weight: "",
+            greased: false,
+            "highest medal achieved": "",
+        });
+    }
 
-      <div className="field">
-        <label>Image URL:</label>
-        <input
-          type="text"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-        />
-      </div>
+    return (
+        <form className="ui form" onSubmit={handleSubmit}>
+            <h4>Add a New Hog</h4>
 
-      <div className="field">
-        <label>Specialty:</label>
-        <input
-          type="text"
-          name="specialty"
-          value={formData.specialty}
-          onChange={handleChange}
-        />
-      </div>
+            <div className="field">
+                <label htmlFor="name">Name:</label>
+                <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                />
+            </div>
 
-      <div className="field">
-        <label>Weight:</label>
-        <input
-          type="number"
-          name="weight"
-          value={formData.weight}
-          onChange={handleChange}
-        />
-      </div>
+            <div className="field">
+                <label htmlFor="image">Image URL:</label>
+                <input
+                    id="image"
+                    type="text"
+                    name="image"
+                    value={formData.image}
+                    onChange={handleChange}
+                />
+            </div>
 
-      <div className="field">
-        <label>Greased:</label>
-        <input
-          type="checkbox"
-          name="greased"
-          checked={formData.greased}
-          onChange={handleChange}
-        />
-      </div>
+            <div className="field">
+                <label htmlFor="specialty">Specialty:</label>
+                <input
+                    id="specialty"
+                    type="text"
+                    name="specialty"
+                    value={formData.specialty}
+                    onChange={handleChange}
+                />
+            </div>
 
-      <div className="field">
-        <label>Highest Medal Achieved:</label>
-        <input
-          type="text"
-          name="highestMedalAchieved"
-          value={formData.highestMedalAchieved}
-          onChange={handleChange}
-        />
-      </div>
+            <div className="field">
+                <label htmlFor="weight">Weight:</label>
+                <input
+                    id="weight"
+                    type="number"
+                    name="weight"
+                    value={formData.weight}
+                    onChange={handleChange}
+                />
+            </div>
 
-      <button className="ui button primary" type="submit">
-        Add Hog
-      </button>
-    </form>
-  );
+            <div className="field">
+                <label htmlFor="greased">Greased?</label>
+                <input
+                    id="greased"
+                    type="checkbox"
+                    name="greased"
+                    checked={formData.greased}
+                    onChange={handleChange}
+                />
+            </div>
+
+            <div className="field">
+                <label htmlFor="highest medal achieved">Highest Medal Achieved:</label>
+                <input
+                    id="highest medal achieved"
+                    type="text"
+                    name="highest medal achieved"
+                    value={formData["highest medal achieved"]}
+                    onChange={handleChange}
+                />
+
+            </div>
+
+            <button className="ui button primary" type="submit">
+                Add Hog
+            </button>
+        </form>
+    );
 }
 
 export default HogForm;
